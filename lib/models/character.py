@@ -1,6 +1,8 @@
 from models.__init__ import CURSOR, CONN
 
 class Character:
+    all = {}
+
     def __init__(self, name, job_class, id = None):
         self.id = id
         self.name = name
@@ -37,7 +39,9 @@ class Character:
         """
         CURSOR.execute(sql, (self.name, self.job_class))
         CONN.commit()
+
         self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
 
     
     @classmethod
@@ -65,8 +69,58 @@ class Character:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
+        #delete the dictionary entry using id as the key
+        del type(self).all[self.id]
+        self.id = None
 
+    ##mapping database row to python object
+    @classmethod
+    def instance_from_db(cls, row):
+        character = cls.all.get(row[0])
+        if character:
+            character.name = row[1]
+            character.job_class = row[2]
+        else:
+            character = cls(row[1], row[2])
+            character.id = row[0]
+            character.all[character.id] = character
+        return character
+    
+    @classmethod
+    def get_all(cls):
+        sql = """
+            SELECT *
+            FROM characters
+        """
+        rows = CURSOR.execute(sql).fetchall()
+
+        return [cls.instance_from_db(row) for row in rows]
+    
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT *
+            FROM characters
+            WHERE id = ?
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def find_by_name(cls, name):
+        sql = """
+            SELECT *
+            FROM characters
+            WHERE name is ?
+        """
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
     
 
+    
+    
+
+
+    
     
 

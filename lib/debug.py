@@ -5,21 +5,14 @@ from models.__init__ import CONN, CURSOR
 from models.character import Character
 import ipdb
 
-Character.drop_table()
-Character.create_table()
+def reset_database():
+    Character.drop_table()
+    Character.create_table()
 
-bob = Character.create("bob", "adventurer")
-print(bob)
+    Character.create("bob", "adventurer")
+    Character.create("sam", "mage")
+    Character.create("anna", "fencer")
 
-sam = Character.create("sam", "mage")
-print(sam)
-
-sam.job_class = "swordsman"
-sam.update()
-print(sam)
-
-print("Delete bob")
-bob.delete()
-print(bob)
+reset_database()
 
 ipdb.set_trace()

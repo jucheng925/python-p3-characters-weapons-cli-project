@@ -1,4 +1,4 @@
-from __init__ import CURSOR, CONN
+from models.__init__ import CURSOR, CONN
 
 class Weapon:
     def __init__(self, type, damage_value, owner_id=None, id =None):

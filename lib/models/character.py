@@ -40,5 +40,33 @@ class Character:
         self.id = CURSOR.lastrowid
 
     
+    @classmethod
+    def create(cls, name, job_class):
+        character = cls(name, job_class)
+        character.save()
+        return character
+    
+    
+    def update(self):
+        sql = """
+            UPDATE characters
+            SET name = ?, job_class = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name, self.job_class, self.id))
+        CONN.commit()
 
+
+    def delete(self):
+        sql = """
+            DELETE FROM characters
+            where id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+
+    
+
+    
 

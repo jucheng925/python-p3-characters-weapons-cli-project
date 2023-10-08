@@ -12,6 +12,7 @@ def reset_database():
     Character.create("bob", "adventurer")
     Character.create("sam", "mage")
     Character.create("anna", "fencer")
+    
 
 reset_database()
 

@@ -116,6 +116,16 @@ class Character:
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
+    def weapons(self):
+        from weapon import Weapon
+        sql = """
+            SELECT * FROM weapons
+            WHERE owner_id = ?
+        """
+        CURSOR.execute(sql, (self.id,),)
+        rows = CURSOR.fetchall()
+        return [Weapon.instance_from_db(row) for row in rows]
+    
 
     
     

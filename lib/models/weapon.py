@@ -16,6 +16,39 @@ class Weapon:
             f"Owner ID: {self.owner_id}>"
         )
     
+    @property
+    def type(self):
+        return self._type
+    
+    @type.setter
+    def type(self, type):
+        if isinstance(type, str) and len(type):
+            self._type = type
+        else:
+            raise ValueError("Weapon type must be a non-empty string")
+    
+    @property
+    def damage_value(self):
+        return self._damage_value
+    
+    @damage_value.setter
+    def damage_value(self, damage_value):
+        if isinstance(damage_value, int) and (int > 0):
+            self._damage_value = damage_value
+        else:
+            raise ValueError("Damage Value must be an integer greater than 0")
+    
+    @property
+    def owner_id(self):
+        return self._owner_id
+    
+    @owner_id.setter
+    def owner_id(self, owner_id):
+        if type(owner_id) is int and Character.find_by_id(owner_id):
+            self._owner_id = owner_id
+        else:
+            raise ValueError("Owner must reference a character in the database.")
+
     #ORM methods
     @classmethod
     def create_table(cls):

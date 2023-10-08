@@ -1,6 +1,10 @@
 from models.__init__ import CURSOR, CONN
 
 class Character:
+    ##Job class - will need to build out a list of available job class.
+    ##Show it to the end user
+    ##fixed the property - to show error when it is not one of the available class
+
     all = {}
 
     def __init__(self, name, job_class, id = None):
@@ -10,6 +14,28 @@ class Character:
 
     def __repr__(self):
         return f"<Character {self.id}: {self.name}, {self.job_class}>"
+    
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, name):
+        if isinstance(name, str) and len(name):
+            self._name = name
+        else:
+            raise ValueError("Name must be a non-empty string")
+        
+    @property
+    def job_class(self):
+        return self._location
+    
+    @job_class.setter
+    def job_class(self, job_class):
+        if isinstance(job_class, str) and len(job_class):
+            self.job_class = job_class
+        else:
+            raise ValueError("Job class must be a non-empty string")
 
 
     #ORM methods

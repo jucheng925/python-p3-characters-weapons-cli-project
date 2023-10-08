@@ -33,7 +33,7 @@ class Weapon:
     
     @damage_value.setter
     def damage_value(self, damage_value):
-        if isinstance(damage_value, int) and (int > 0):
+        if isinstance(damage_value, int) and (damage_value > 0):
             self._damage_value = damage_value
         else:
             raise ValueError("Damage Value must be an integer greater than 0")
@@ -100,8 +100,8 @@ class Weapon:
 
     def delete(self):
         sql = """
-            DELETE FROM characters
-            where id = ?
+            DELETE FROM weapons
+            WHERE id = ?
         """
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
@@ -121,6 +121,7 @@ class Weapon:
             weapon = cls(row[1], row[2], row[3])
             weapon.id = row[0]
             cls.all[weapon.id] = weapon
+        return weapon
 
     @classmethod
     def get_all(cls):
@@ -143,12 +144,12 @@ class Weapon:
         return cls.instance_from_db(row) if row else None
     
     @classmethod
-    def find_by_name(cls, name):
+    def find_by_type(cls, type):
         sql = """
             SELECT *
-            FROM employees
-            WHERE name is ?
+            FROM weapons
+            WHERE type is ?
         """
-        row = CURSOR.execute(sql, (name,)).fetchone()
+        row = CURSOR.execute(sql, (type,)).fetchone()
         return cls.instance_from_db(row) if row else None
     

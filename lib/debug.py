@@ -16,10 +16,10 @@ def reset_database():
     Character.create("sam", "mage")
     Character.create("anna", "fencer")
     
-    Weapon.create("one handed sword", 4, 0)
-    Weapon.create("Magic Wand", 2, 1)
-    Weapon.create("Throwing knives",2, 0)
-    Weapon.create("Sword", 4, 2)
+    Weapon.create("one handed sword", 4, 1)
+    Weapon.create("Magic Wand", 2, 2)
+    Weapon.create("Throwing knives",2, 1)
+    Weapon.create("Sword", 4, 3)
     
 
 reset_database()

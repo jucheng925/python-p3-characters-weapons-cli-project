@@ -28,12 +28,12 @@ class Character:
         
     @property
     def job_class(self):
-        return self._location
+        return self._job_class
     
     @job_class.setter
     def job_class(self, job_class):
         if isinstance(job_class, str) and len(job_class):
-            self.job_class = job_class
+            self._job_class = job_class
         else:
             raise ValueError("Job class must be a non-empty string")
 
@@ -143,7 +143,7 @@ class Character:
         return cls.instance_from_db(row) if row else None
     
     def weapons(self):
-        from weapon import Weapon
+        from models.weapon import Weapon
         sql = """
             SELECT * FROM weapons
             WHERE owner_id = ?

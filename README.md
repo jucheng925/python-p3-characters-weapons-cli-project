@@ -190,3 +190,48 @@ Happy coding!
 ## Resources
 
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
+
+
+
+
+
+MENU 
+Main menu:
+    Welcome to Fantasy Land
+       **Choose a character**
+    1. Display All Characters
+    2. Add a custom character
+    3. delete character
+    4. Exit
+
+Display All Characters menu
+    1. Bob
+    2. sam
+    3. Anna
+    etc
+    4. Go back to previous menu
+
+Display individual character
+    print out character name, job_class, weapons
+    1. update character name or job_class
+    2. Display all weapons for that character
+    3. return to previous menu
+
+display character's weapon
+    print all weapons belonging to the characters
+    1. want to trade a weapon?
+    2. or just want to sell of your weapon(delete)
+    3. add a custom made weapon?
+    4. return to previous menu
+
+
+trade menu:
+    Who do you want to trade with?
+    **display all other characters except for you**
+    once a character selected - show their weapons
+    let user choose a weapon
+    then ask use to select a weapon they have.
+    ask: "Please confirm the trade(Y/N)"
+    return to previous menu
+
+

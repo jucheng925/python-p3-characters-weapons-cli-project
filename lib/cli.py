@@ -10,13 +10,18 @@ from helpers import (
 
 
 def main():
-    while True:
+    choice = 0
+    while choice < 4:
         menu()
-        choice = input("> ")
-        if choice == "0":
+        choice = int(input("> "))
+        if choice == 1:
+            print("display")
+        elif choice == 2:
+            print("add")
+        elif choice == 3:
+            print("delete")
+        elif choice == 4:
             exit_program()
-        elif choice == "1":
-            submain()
         else:
             print("Invalid choice")
 
@@ -35,11 +40,17 @@ def submain():
 
 
 def menu():
-    print("Please select an option:")
-    asterisk_line()
-    print("0. Exit the program")
     blankline()
-    print("1. Some useful function")
+    print(" **Welcome to Game World**")
+    asterisk_line() 
+    print("  Please select a character:")
+    print("     1. Display all characters")
+    blankline()
+    print("     2. Add a new character")
+    blankline()
+    print("     3. Delete a character")
+    blankline()
+    print("     4. Exit program")
 
 def submenu():
     print("Select suboption:")

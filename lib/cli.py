@@ -25,19 +25,6 @@ def main():
         else:
             print("Invalid choice")
 
-def submain():
-    while True:
-        submenu()
-        choice = input("> ")
-        print(choice)
-        if choice == "0":
-            exit_program()
-        elif choice == "1":
-            helper_1()
-            prev_menu()
-        else:
-            print("Invalid choice")
-
 
 def menu():
     blankline()
@@ -52,19 +39,35 @@ def menu():
     blankline()
     print("     4. Exit program")
 
-def submenu():
-    print("Select suboption:")
-    asterisk_line()
-    asterisk_line()
-    print("option 1")
-    print("option 2")
+def character_menu(character):
+    
+    choice = 0
+    while choice < 3:
+        asterisk_line()
+        print(f'     1. Update selected {character.name}')
+        blankline()
+        print(f'     2. Display all weapons')
+        blankline()
+        print(f'    3. Return to previous menu')
 
-def prev_menu():
-    choice = input("Go back to previous menu? (Y/N): ")
-    if choice == "Y":
-        menu()
-    else:
-        exit_program()
+        choice = int(input("Choose an option"))
+        if choice == 2:
+            print("Display")
+
+
+# def submenu():
+#     print("Select suboption:")
+#     asterisk_line()
+#     asterisk_line()
+#     print("option 1")
+#     print("option 2")
+
+# def prev_menu():
+#     choice = input("Go back to previous menu? (Y/N): ")
+#     if choice == "Y":
+#         menu()
+#     else:
+#         exit_program()
 
 
 if __name__ == "__main__":

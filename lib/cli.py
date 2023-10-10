@@ -5,7 +5,7 @@ from helpers import (
     exit_program,
     blankline,
     asterisk_line,
-    helper_1
+    display_all_characters
 )
 
 
@@ -15,7 +15,7 @@ def main():
         menu()
         choice = int(input("> "))
         if choice == 1:
-            print("display")
+            display_all_characters()
         elif choice == 2:
             print("add")
         elif choice == 3:

@@ -13,7 +13,7 @@ class Character:
         self.job_class = job_class
 
     def __repr__(self):
-        return f"<Character {self.id}: {self.name}, {self.job_class}>"
+        return f"Character: {self.name}, Job class: {self.job_class}"
     
     @property
     def name(self):

@@ -13,7 +13,7 @@ class Character:
         self.job_class = job_class
 
     def __repr__(self):
-        return f"Character: {self.name}, Job class: {self.job_class}"
+        return f"Character: {self.name.title()}, Job class: {self.job_class.title()}"
     
     @property
     def name(self):
@@ -22,7 +22,7 @@ class Character:
     @name.setter
     def name(self, name):
         if isinstance(name, str) and len(name):
-            self._name = name
+            self._name = name.lower()
         else:
             raise ValueError("Name must be a non-empty string")
         
@@ -33,7 +33,7 @@ class Character:
     @job_class.setter
     def job_class(self, job_class):
         if isinstance(job_class, str) and len(job_class):
-            self._job_class = job_class
+            self._job_class = job_class.lower()
         else:
             raise ValueError("Job class must be a non-empty string")
 

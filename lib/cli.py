@@ -5,22 +5,22 @@ from helpers import (
     exit_program,
     blankline,
     asterisk_line,
-    display_all_characters
+    display_all_characters,
+    add_character
 )
 
 
 def main():
-    choice = 0
-    while choice < 4:
+    while True:
         menu()
-        choice = int(input("> "))
-        if choice == 1:
+        choice = input("> ")
+        if choice == "1":
             display_all_characters()
-        elif choice == 2:
-            print("add")
-        elif choice == 3:
+        elif choice == "2":
+            add_character()
+        elif choice == "3":
             print("delete")
-        elif choice == 4:
+        elif choice == "4":
             exit_program()
         else:
             print("Invalid choice")
@@ -40,34 +40,28 @@ def menu():
     print("     4. Exit program")
 
 def character_menu(character):
-    
-    choice = 0
-    while choice < 3:
+    char_menu = True
+    while char_menu:
         asterisk_line()
-        print(f'     1. Update selected {character.name}')
+        print("Choose an option: ")
+        print(f'     1. Update selected {character.name.title()}')
         blankline()
         print(f'     2. Display all weapons')
         blankline()
-        print(f'    3. Return to previous menu')
+        print(f'     3. Return to previous menu')
 
-        choice = int(input("Choose an option"))
-        if choice == 2:
-            print("Display")
+        choice = input("> ")
+        if choice == "1":
+            print("update")
+        elif choice == "2":
+            print("display")
+        elif choice == "3":
+            print("Returning to previous menu")
+            char_menu = False
+        else:
+            print("Invalid Choice")
 
 
-# def submenu():
-#     print("Select suboption:")
-#     asterisk_line()
-#     asterisk_line()
-#     print("option 1")
-#     print("option 2")
-
-# def prev_menu():
-#     choice = input("Go back to previous menu? (Y/N): ")
-#     if choice == "Y":
-#         menu()
-#     else:
-#         exit_program()
 
 
 if __name__ == "__main__":

@@ -9,9 +9,9 @@ def seed_database():
     Weapon.create_table()
 
     #Create seed data
-    bob = Character.create("Bob", "adventurer")
-    sam = Character.create("Sam", "mage")
-    anna = Character.create("Anna", "fencer")
+    bob = Character.create("bob", "adventurer")
+    sam = Character.create("sam", "mage")
+    anna = Character.create("anna", "fencer")
     
     Weapon.create("one handed sword", 4, bob.id)
     Weapon.create("magic wand", 2, sam.id)

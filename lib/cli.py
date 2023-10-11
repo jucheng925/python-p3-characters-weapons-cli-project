@@ -6,7 +6,8 @@ from helpers import (
     blankline,
     asterisk_line,
     display_all_characters,
-    add_character
+    add_character,
+    delete_character
 )
 
 
@@ -46,14 +47,19 @@ def character_menu(character):
         print("Choose an option: ")
         print(f'     1. Update selected {character.name.title()}')
         blankline()
-        print(f'     2. Display all weapons')
+        print(f'     2. Delete seleted character (including all weapons)')
         blankline()
-        print(f'     3. Return to previous menu')
+        print(f'     3. Display all weapons')
+        blankline()
+        print(f'     4. Return to previous menu')
 
         choice = input("> ")
         if choice == "1":
             print("update")
         elif choice == "2":
+            delete_character(character)
+    
+        elif choice == "3":
             print("display")
         elif choice == "3":
             print("Returning to previous menu")

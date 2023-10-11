@@ -192,7 +192,7 @@ Happy coding!
 - [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
 
 
-
+## currently working on.. where the delete character should be and which menu should be the shown up next. how to break a loop.
 
 
 MENU 
@@ -214,6 +214,7 @@ Display All Characters menu
 Display individual character
     print out character name, job_class, weapons
     1. update character name or job_class
+    2. delete selected character (including all the weapons it has)
     2. Display all weapons for that character
     3. return to previous menu
 

@@ -36,6 +36,7 @@ def display_one_character(name):
     selected = Character.find_by_name(name)
     blankline()
     print(selected)
+    print(selected.id)
     from cli import character_menu
     character_menu(selected)
 
@@ -48,6 +49,16 @@ def add_character():
         print(f'Success in creating: {character}')
     except Exception as exc:
         print("Error creating character: ", exc)
+
+def delete_character(character):
+    try:
+        delete_char = Character.find_by_id(character.id)
+        delete_char.delete()
+        print(f'{character} is deleted.')
+    except Exception:
+        print("Not successful in deleting character")
+
+
 
 
 def exit_program():

@@ -20,8 +20,6 @@ def main():
         elif choice == "2":
             add_character()
         elif choice == "3":
-            print("delete")
-        elif choice == "4":
             exit_program()
         else:
             print("Invalid choice")
@@ -36,13 +34,26 @@ def menu():
     blankline()
     print("     2. Add a new character")
     blankline()
-    print("     3. Delete a character")
-    blankline()
-    print("     4. Exit program")
+    print("     3. Exit program")
+
+def display_all_menu(characters):
+    while True:
+        blankline()
+        print("Enter a Character's name for more details or hit 'ENTER' to return to the previous menu.")
+        x = 1
+        for character in characters:
+            character["position"] = x
+            blankline()
+            print(f'    {character["position"]}', end= ". ")
+            print(character)
+            blankline()
+            x +=1
+        # print(f'    {x}. Press "Enter" to return to previous menu')
+        choice = input("> ")
+        # name = name.lower()
 
 def character_menu(character):
-    char_menu = True
-    while char_menu:
+    while True:
         asterisk_line()
         print("Choose an option: ")
         print(f'     1. Update selected {character.name.title()}')
@@ -58,12 +69,11 @@ def character_menu(character):
             print("update")
         elif choice == "2":
             delete_character(character)
-    
         elif choice == "3":
             print("display")
-        elif choice == "3":
+        elif choice == "4":
             print("Returning to previous menu")
-            char_menu = False
+            break
         else:
             print("Invalid Choice")
 

@@ -12,25 +12,43 @@ def asterisk_line():
 def display_all_characters():
     ## POSSIBLE NEED TO SWITCH TO FIND BY ID. AND NEED ERRORS
     characters = Character.get_all()
-    display_all = True
-    while display_all:
+    while True:
         blankline()
         print("Enter a Character's name for more details or hit 'ENTER' to return to the previous menu.")
         x = 1
         for character in characters:
+            character.position = x
             blankline()
-            print(f'    {str(x)}', end= ". ")
+            print(f'    {character.position}', end= ". ")
             print(character)
             blankline()
             x +=1
-        # print(f'    {x}. Press "Enter" to return to previous menu')
-        name = input("> ")
-        name = name.lower()
-        if name == "":
+        choice = input("> ")
+        if choice == "":
             print("Returning to previous menu")
-            display_all = False
+            break
         else:
-            display_one_character(name)
+            if 
+        # name = name.lower()
+    # display_all = True
+    # while display_all:
+        # blankline()
+        # print("Enter a Character's name for more details or hit 'ENTER' to return to the previous menu.")
+        # x = 1
+        # for character in characters:
+        #     blankline()
+        #     print(f'    {str(x)}', end= ". ")
+        #     print(character)
+        #     blankline()
+        #     x +=1
+        # # print(f'    {x}. Press "Enter" to return to previous menu')
+        # name = input("> ")
+        # name = name.lower()
+        # if name == "":
+        #     print("Returning to previous menu")
+        #     display_all = False
+        # else:
+            # display_one_character(name)
     
 def display_one_character(name):
     selected = Character.find_by_name(name)

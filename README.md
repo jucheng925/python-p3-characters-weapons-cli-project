@@ -201,7 +201,6 @@ Main menu:
        **Choose a character**
     1. Display All Characters
     2. Add a custom character
-    3. delete character
     4. Exit
 
 Display All Characters menu

@@ -12,8 +12,7 @@ class Weapon:
 
     def __repr__(self):
         return (
-            f"<Weapon {self.id}: {self.type}, {self.damage_value}, " +
-            f"Owner ID: {self.owner_id}>"
+            f"<Weapon: {self.type}, Damage value: {self.damage_value}>"
         )
     
     @property

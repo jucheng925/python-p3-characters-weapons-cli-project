@@ -197,13 +197,14 @@ Happy coding!
 
 MENU 
 Main menu:
-    Welcome to Fantasy Land
+    Welcome to Fantasy Land =>done
        **Choose a character**
     1. Display All Characters
     2. Add a custom character
     4. Exit
+** note - should have a list of jobclass! (need to work on)
 
-Display All Characters menu
+Display All Characters menu ==>done
     1. Bob
     2. sam
     3. Anna
@@ -211,9 +212,9 @@ Display All Characters menu
     4. Go back to previous menu
 
 Display individual character
-    print out character name, job_class, weapons
+    print out character name, job_class, weapons 
     1. update character name or job_class
-    2. delete selected character (including all the weapons it has)
+    2. delete selected character (including all the weapons it has)  ==> done
     2. Display all weapons for that character
     3. return to previous menu
 

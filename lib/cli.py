@@ -29,46 +29,36 @@ def menu():
     blankline()
     print(" **Welcome to Game World**")
     asterisk_line() 
-    print("  Please select a character:")
-    print("     1. Display all characters")
+    print("  Please choose a character:")
+    print("     1. Display all available characters")
     blankline()
     print("     2. Add a new character")
     blankline()
     print("     3. Exit program")
 
-def display_all_menu(characters):
-    while True:
-        blankline()
-        print("Enter a Character's name for more details or hit 'ENTER' to return to the previous menu.")
-        x = 1
-        for character in characters:
-            character["position"] = x
-            blankline()
-            print(f'    {character["position"]}', end= ". ")
-            print(character)
-            blankline()
-            x +=1
-        # print(f'    {x}. Press "Enter" to return to previous menu')
-        choice = input("> ")
-        # name = name.lower()
 
-def character_menu(character):
+
+def character_menu(selected_char):
+    blankline()
+    print(selected_char, end=", \n")
+    print(f'    Current weapon(s): {selected_char.weapons()}')
     while True:
         asterisk_line()
         print("Choose an option: ")
-        print(f'     1. Update selected {character.name.title()}')
+        print(f'     1. Update {selected_char.name.title()}')
         blankline()
-        print(f'     2. Delete seleted character (including all weapons)')
+        print(f'     2. Delete {selected_char.name.title()} (including all weapons)')
         blankline()
-        print(f'     3. Display all weapons')
+        print(f'     3. Display {selected_char.name.title()}\'s weapon(s)')
         blankline()
-        print(f'     4. Return to previous menu')
+        print('     4. Return to previous menu')
 
         choice = input("> ")
         if choice == "1":
             print("update")
         elif choice == "2":
-            delete_character(character)
+            delete_character(selected_char)
+            main()
         elif choice == "3":
             print("display")
         elif choice == "4":

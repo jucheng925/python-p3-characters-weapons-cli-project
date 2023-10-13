@@ -10,53 +10,32 @@ def asterisk_line():
     print("****************************")
 
 def display_all_characters():
-    ## POSSIBLE NEED TO SWITCH TO FIND BY ID. AND NEED ERRORS
     characters = Character.get_all()
     while True:
         blankline()
-        print("Enter a Character's name for more details or hit 'ENTER' to return to the previous menu.")
+        print("Enter a selection for more details: ")
         x = 1
         for character in characters:
             character.position = x
-            blankline()
             print(f'    {character.position}', end= ". ")
             print(character)
             blankline()
             x +=1
-        choice = input("> ")
-        if choice == "":
-            print("Returning to previous menu")
-            break
-        else:
-            if 
-        # name = name.lower()
-    # display_all = True
-    # while display_all:
-        # blankline()
-        # print("Enter a Character's name for more details or hit 'ENTER' to return to the previous menu.")
-        # x = 1
-        # for character in characters:
-        #     blankline()
-        #     print(f'    {str(x)}', end= ". ")
-        #     print(character)
-        #     blankline()
-        #     x +=1
-        # # print(f'    {x}. Press "Enter" to return to previous menu')
-        # name = input("> ")
-        # name = name.lower()
-        # if name == "":
-        #     print("Returning to previous menu")
-        #     display_all = False
-        # else:
-            # display_one_character(name)
-    
-def display_one_character(name):
-    selected = Character.find_by_name(name)
-    blankline()
-    print(selected)
-    print(selected.id)
-    from cli import character_menu
-    character_menu(selected)
+        print(f'    {x}. or press "Enter" to return to previous menu.')
+        try: 
+            choice = input("> ")
+            if choice == "" or choice == str(x):
+                print("Returning to previous menu")
+                break
+            elif int(choice) in range(1, x):
+                char = [character for character in characters if character.position == int(choice)]
+                from cli import character_menu
+                character_menu(char[0])
+            else:
+                print("Invalid number - need to be one of the listed number.")
+        except ValueError:
+            print("Invalid selection - selection must be a number")
+
 
 def add_character():
     name = input("Enter the character's name: ")
@@ -71,6 +50,8 @@ def add_character():
 def delete_character(character):
     try:
         delete_char = Character.find_by_id(character.id)
+        weapons = delete_char.weapons()
+        [weapon.delete() for weapon in weapons]
         delete_char.delete()
         print(f'{character} is deleted.')
     except Exception:

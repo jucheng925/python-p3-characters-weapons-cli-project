@@ -213,7 +213,7 @@ Display All Characters menu ==>done
 
 Display individual character
     print out character name, job_class, weapons 
-    1. update character name or job_class
+    1. update character name or job_class --> done
     2. delete selected character (including all the weapons it has)  ==> done
     2. Display all weapons for that character
     3. return to previous menu

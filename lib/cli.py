@@ -7,7 +7,9 @@ from helpers import (
     asterisk_line,
     display_all_characters,
     add_character,
-    delete_character
+    delete_character,
+    update_character,
+    display_weapons
 )
 
 
@@ -41,32 +43,55 @@ def menu():
 def character_menu(selected_char):
     blankline()
     print(selected_char, end=", \n")
-    print(f'    Current weapon(s): {selected_char.weapons()}')
+    print(f'    Currently has {len(selected_char.weapons())} weapon(s).')
     while True:
         asterisk_line()
         print("Choose an option: ")
-        print(f'     1. Update {selected_char.name.title()}')
+        print(f'     1. Update {selected_char.name}')
         blankline()
-        print(f'     2. Delete {selected_char.name.title()} (including all weapons)')
+        print(f'     2. Delete {selected_char.name} (including all current weapons)')
         blankline()
-        print(f'     3. Display {selected_char.name.title()}\'s weapon(s)')
+        print(f'     3. Display {selected_char.name}\'s weapon(s)')
         blankline()
-        print('     4. Return to previous menu')
+        print('     4. Or Press "Enter" to return to previous menu')
 
         choice = input("> ")
         if choice == "1":
-            print("update")
+            update_character(selected_char)
         elif choice == "2":
             delete_character(selected_char)
             main()
         elif choice == "3":
-            print("display")
-        elif choice == "4":
+            display_weapons(selected_char)
+            weapon_menu(selected_char.weapons())
+        elif choice == "4" or choice == "":
             print("Returning to previous menu")
             break
         else:
             print("Invalid Choice")
 
+def weapon_menu(weapons):
+    
+    while True:
+        asterisk_line()
+        print("Choose an option: ")
+        print('     1. Buy a custom made weapon')
+        print('     2. Sell weapon(s)')
+        print('     3. Trade weapon with other characters')
+        print('     4. Or press "Enter" to previous menu')
+
+        choice = input("> ")
+        if choice == "1":
+            print("add weapon")
+        elif choice == "2":
+            print("sell/delete")
+        elif choice == "3":
+            print("trade")
+        elif choice == "4" or choice == "":
+            print("Returning to previous menu")
+            break
+        else:
+            print("Invalid Choice")
 
 
 

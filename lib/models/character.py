@@ -7,13 +7,14 @@ class Character:
 
     all = {}
 
-    def __init__(self, name, job_class, id = None):
+    def __init__(self, name, job_class, money, id = None):
         self.id = id
         self.name = name
         self.job_class = job_class
+        self.money = money
 
     def __repr__(self):
-        return f"Character: {self.name.title()}, Job class: {self.job_class.title()}"
+        return f"Character: {self.name}, Job class: {self.job_class.title()}, Money: ${self.money}"
     
     @property
     def name(self):
@@ -22,7 +23,7 @@ class Character:
     @name.setter
     def name(self, name):
         if isinstance(name, str) and len(name):
-            self._name = name.lower()
+            self._name = name.title()
         else:
             raise ValueError("Name must be a non-empty string")
         
@@ -36,6 +37,17 @@ class Character:
             self._job_class = job_class.lower()
         else:
             raise ValueError("Job class must be a non-empty string")
+        
+    @property
+    def money(self):
+        return self._money
+    
+    @money.setter
+    def money(self, money):
+        if isinstance(money, int) and money >= 0:
+            self._money = money
+        else:
+            raise TypeError("Money must be an integer greater than or equal to 0.")
 
 
     #ORM methods
@@ -45,7 +57,8 @@ class Character:
             CREATE TABLE IF NOT EXISTS characters (
             id INTEGER PRIMARY KEY,
             name TEXT,
-            job_class TEXT)
+            job_class TEXT,
+            money INTEGER)
         """
         CURSOR.execute(sql)
         CONN.commit()
@@ -60,10 +73,10 @@ class Character:
 
     def save(self):
         sql = """
-            INSERT INTO characters (name, job_class)
-            VALUES (?, ?)
+            INSERT INTO characters (name, job_class, money)
+            VALUES (?, ?, ?)
         """
-        CURSOR.execute(sql, (self.name, self.job_class))
+        CURSOR.execute(sql, (self.name, self.job_class, self.money))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
@@ -71,8 +84,8 @@ class Character:
 
     
     @classmethod
-    def create(cls, name, job_class):
-        character = cls(name, job_class)
+    def create(cls, name, job_class, money = 100):
+        character = cls(name, job_class, money)
         character.save()
         return character
     
@@ -80,10 +93,10 @@ class Character:
     def update(self):
         sql = """
             UPDATE characters
-            SET name = ?, job_class = ?
+            SET name = ?, job_class = ?, money = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.name, self.job_class, self.id))
+        CURSOR.execute(sql, (self.name, self.job_class, self.money, self.id))
         CONN.commit()
 
 
@@ -106,8 +119,9 @@ class Character:
         if character:
             character.name = row[1]
             character.job_class = row[2]
+            character.money = row[3]
         else:
-            character = cls(row[1], row[2])
+            character = cls(row[1], row[2], row[3])
             character.id = row[0]
             character.all[character.id] = character
         return character

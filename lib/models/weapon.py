@@ -4,15 +4,16 @@ from models.character import Character
 class Weapon:
     all = {}
 
-    def __init__(self, type, damage_value, owner_id, id =None):
+    def __init__(self, type, damage_value, cost_value, owner_id, id =None):
         self.id = id
         self.type = type
         self.damage_value = damage_value
+        self.cost_value = cost_value
         self.owner_id = owner_id
 
     def __repr__(self):
         return (
-            f"<Weapon: {self.type}, Damage value: {self.damage_value}>"
+            f"< Weapon: {self.type}, Damage value: {self.damage_value}, Cost value: ${self.cost_value} >"
         )
     
     @property
@@ -38,12 +39,23 @@ class Weapon:
             raise ValueError("Damage Value must be an integer greater than 0")
     
     @property
+    def cost_value(self):
+        return self._cost_value
+    
+    @cost_value.setter
+    def cost_value(self, cost_value):
+        if isinstance(cost_value, int) and (cost_value >= 0):
+            self._cost_value = cost_value
+        else:
+            raise ValueError("Cost value must be an integer greater than or equal to 0")
+    
+    @property
     def owner_id(self):
         return self._owner_id
     
     @owner_id.setter
     def owner_id(self, owner_id):
-        if type(owner_id) is int and Character.find_by_id(owner_id):
+        if isinstance(owner_id, int) and Character.find_by_id(owner_id):
             self._owner_id = owner_id
         else:
             raise ValueError("Owner must reference a character in the database.")
@@ -56,6 +68,7 @@ class Weapon:
             id INTEGER PRIMARY KEY,
             type TEXT,
             damage_value INTEGER,
+            cost_value INTEGER,
             owner_id INTEGER,
             FOREIGN KEY (owner_id) REFERENCES characters(id))
         """
@@ -72,28 +85,28 @@ class Weapon:
 
     def save(self):
         sql = """
-            INSERT INTO weapons (type, damage_value, owner_id)
-            VALUES (?, ?, ?)
+            INSERT INTO weapons (type, damage_value, cost_value, owner_id)
+            VALUES (?, ?, ?, ?)
         """
-        CURSOR.execute(sql, (self.type, self.damage_value, self.owner_id))
+        CURSOR.execute(sql, (self.type, self.damage_value, self.cost_value, self.owner_id))
         CONN.commit()
 
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
 
     @classmethod
-    def create(cls, type, damage_value, owner_id):
-        weapon = cls(type, damage_value, owner_id)
+    def create(cls, type, damage_value, cost_value, owner_id):
+        weapon = cls(type, damage_value, cost_value, owner_id)
         weapon.save()
         return weapon
     
     def update(self):
         sql = """
             UPDATE weapons
-            SET type = ?, damage_value = ?, owner_id = ?
+            SET type = ?, damage_value = ?, cost_value = ?, owner_id = ?
             WHERE id = ?
         """
-        CURSOR.execute(sql, (self.type, self.damage_value, self.owner_id, self.id))
+        CURSOR.execute(sql, (self.type, self.damage_value, self.cost_value, self.owner_id, self.id))
         CONN.commit()
 
 
@@ -115,9 +128,10 @@ class Weapon:
         if weapon:
             weapon.type = row[1]
             weapon.damage_value = row[2]
-            weapon.owner_id = row[3]
+            weapon.cost_value = row[3]
+            weapon.owner_id = row[4]
         else:
-            weapon = cls(row[1], row[2], row[3])
+            weapon = cls(row[1], row[2], row[3], row[4])
             weapon.id = row[0]
             cls.all[weapon.id] = weapon
         return weapon

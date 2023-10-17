@@ -221,8 +221,8 @@ Display individual character
 display character's weapon
     print all weapons belonging to the characters
     1. want to trade a weapon?
-    2. or just want to sell of your weapon(delete)
-    3. add a custom made weapon?
+    2. or just want to sell of your weapon(delete) --done
+    3. add a custom made weapon? -->done
     4. return to previous menu
 
 

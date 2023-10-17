@@ -170,6 +170,10 @@ class Character:
         self.money -= amount
         self.update()
 
+    def sell(self, amount):
+        self.money += amount
+        self.update()
+
     
     
 

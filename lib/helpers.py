@@ -103,9 +103,25 @@ def add_weapon(char):
             blankline()
         except Exception as exc:
             print("Error creating weapon: ", exc)
+            print("Not successful in buying weapon, please try again!")
             blankline()
     else: 
         print("Not successful in buying weapon, please try again!")
+        blankline()
+
+def delete_weapon(char):
+    weapon_type = input("Enter the weapon type to sell: ")
+    try:
+        weapon_to_delete = Weapon.find_by_type(weapon_type.upper())
+        price = weapon_to_delete.cost_value
+        char.sell(price)
+        weapon_to_delete.delete()
+        print(f'{weapon_type} was sold for ${price}')
+        blankline()
+    except Exception:
+        print("Not successful in deleting weapon")
+        blankline()
+
 
 
 

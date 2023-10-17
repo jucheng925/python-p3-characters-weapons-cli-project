@@ -10,7 +10,8 @@ from helpers import (
     delete_character,
     update_character,
     display_weapons,
-    add_weapon
+    add_weapon,
+    delete_weapon
 )
 
 
@@ -63,7 +64,6 @@ def character_menu(selected_char):
             delete_character(selected_char)
             main()
         elif choice == "3":
-            display_weapons(selected_char)
             weapon_menu(selected_char)
         elif choice == "4" or choice == "":
             print("Returning to previous menu")
@@ -72,8 +72,8 @@ def character_menu(selected_char):
             print("Invalid Choice")
 
 def weapon_menu(selected_char):
-    
     while True:
+        display_weapons(selected_char)
         asterisk_line()
         print("Choose an option: ")
         print('     1. Buy a custom made weapon')
@@ -89,7 +89,7 @@ def weapon_menu(selected_char):
         if choice == "1":
             add_weapon(selected_char)
         elif choice == "2":
-            print("sell/delete")
+            delete_weapon(selected_char)
         elif choice == "3":
             print("trade")
         elif choice == "4" or choice == "":

@@ -23,7 +23,7 @@ class Weapon:
     @type.setter
     def type(self, type):
         if isinstance(type, str) and len(type):
-            self._type = type
+            self._type = type.upper()
         else:
             raise ValueError("Weapon type must be a non-empty string")
     

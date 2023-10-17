@@ -33,10 +33,10 @@ class Weapon:
     
     @damage_value.setter
     def damage_value(self, damage_value):
-        if isinstance(damage_value, int) and (damage_value > 0):
+        if isinstance(damage_value, int) and (10 >= damage_value >= 0):
             self._damage_value = damage_value
         else:
-            raise ValueError("Damage Value must be an integer greater than 0")
+            raise ValueError("Damage Value must be an integer between 0 to 10")
     
     @property
     def cost_value(self):
@@ -44,10 +44,10 @@ class Weapon:
     
     @cost_value.setter
     def cost_value(self, cost_value):
-        if isinstance(cost_value, int) and (cost_value >= 0):
+        if isinstance(cost_value, int) and (50 >= cost_value >= 10):
             self._cost_value = cost_value
         else:
-            raise ValueError("Cost value must be an integer greater than or equal to 0")
+            raise ValueError("Cost value must be an integer between 10 to 50")
     
     @property
     def owner_id(self):

@@ -166,6 +166,9 @@ class Character:
         rows = CURSOR.fetchall()
         return [Weapon.instance_from_db(row) for row in rows]
     
+    def spend(self, amount):
+        self.money -= amount
+        self.update()
 
     
     

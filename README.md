@@ -228,7 +228,7 @@ display character's weapon
 
 trade menu:
     Who do you want to trade with?
-    **display all other characters except for you**
+    **display all weapons including your own, but make sure you can not select your own** - to make minimal requirement - of display all
     once a character selected - show their weapons
     let user choose a weapon
     then ask use to select a weapon they have.

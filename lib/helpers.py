@@ -1,6 +1,7 @@
 # lib/helpers.py
 from models.character import Character
 from models.weapon import Weapon
+import random
 
 
 def blankline():
@@ -38,9 +39,9 @@ def display_all_characters():
 
 
 def add_character():
-    name = input("Enter the character's name: \n   > ")
-    job_class = input("Enter the character's job class: \n   > ")
-    money = input('Enter a starting money amount or press "Enter" for the default amount: \n   > ')
+    name = input("Enter the character's name: ")
+    job_class = input("Enter the character's job class: ")
+    money = input('Enter a starting money amount or press "Enter" for the default amount: ')
     name = name.lower()
     try:
         if money == "": money = "100"
@@ -78,13 +79,33 @@ def update_character(character):
 def display_weapons(char):
     weapons = char.weapons()
     if weapons:
-        print(f"Here are the weapon(s) that belongs to {char.name}: ")
+        print(f"The weapon(s) that belongs to {char.name}: ")
         for weapon in weapons:
             blankline()
             print(f'    -- {weapon}')
         blankline()
     else:
         print(f'{char.name} does not have any weapons.')
+
+def add_weapon(char):
+    blankline()
+    weapon_type = input("Enter the type of weapon: ")
+    damage_value = int(input("Enter the weapon's damage value (from 0 to 10): "))
+    message = input('The price of the weapon will be randomly generate. Press "Enter" to acknowledge: ')
+    blankline()
+    if message == "": 
+        try:
+            cost_value = random.randrange(10,51)
+            weapon = Weapon.create(weapon_type, damage_value, cost_value, char.id)
+            print(f'Success in creating: {weapon}')
+            char.spend(cost_value)
+            print(f'**Money spent: ${cost_value}')
+            blankline()
+        except Exception as exc:
+            print("Error creating weapon: ", exc)
+            blankline()
+    else: 
+        print("Not successful in buying weapon, please try again!")
 
 
 

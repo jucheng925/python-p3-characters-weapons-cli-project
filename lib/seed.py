@@ -15,7 +15,7 @@ def seed_database():
     
     Weapon.create("one handed sword", 4, 30, bob.id)
     Weapon.create("magic wand", 2, 20,sam.id)
-    Weapon.create("throwing knives",2, 5,bob.id)
+    Weapon.create("throwing knives",2, 15,bob.id)
     Weapon.create("saber", 4, 45, anna.id)
     
 

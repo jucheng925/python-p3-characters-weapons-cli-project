@@ -1,5 +1,7 @@
 from models.__init__ import CURSOR, CONN
 from models.character import Character
+from prettytable import from_db_cursor
+
 
 class Weapon:
     all = {}
@@ -169,4 +171,14 @@ class Weapon:
         """
         row = CURSOR.execute(sql, (type,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def display_all(cls):
+        sql = """
+            SELECT *
+            FROM weapons
+        """
+
+        rows = CURSOR.execute(sql)
+        return from_db_cursor(rows)
     

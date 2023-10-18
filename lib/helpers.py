@@ -4,6 +4,7 @@ from models.weapon import Weapon
 import random
 
 
+
 def blankline():
     print("")
 
@@ -123,9 +124,13 @@ def delete_weapon(char):
         blankline()
 
 def display_all_weapons():
-    weapons = Weapon.get_all()
-    for weapon in weapons:
-        print(weapon)
+    # weapons = Weapon.get_all()
+    # for weapon in weapons:
+    #     print(weapon)
+    prettytable = Weapon.display_all()
+   
+    prettytable.align = "r"
+    print(prettytable.get_string(fields=["type", "damage_value", "cost_value"]))
 
 
 

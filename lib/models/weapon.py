@@ -13,7 +13,7 @@ class Weapon:
 
     def __repr__(self):
         return (
-            f"< Weapon: {self.type}, Damage value: {self.damage_value}, Cost value: ${self.cost_value} >"
+            f"< Weapon: {self.type}, Damage value: {self.damage_value}, Cost value: ${self.cost_value}, Owner: {self.owner_name()}  >"
         )
     
     @property
@@ -59,6 +59,10 @@ class Weapon:
             self._owner_id = owner_id
         else:
             raise ValueError("Owner must reference a character in the database.")
+        
+    def owner_name(self):
+        owner = Character.find_by_id(self.owner_id)
+        return owner.name
 
     #ORM methods
     @classmethod

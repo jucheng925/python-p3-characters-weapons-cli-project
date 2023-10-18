@@ -122,6 +122,11 @@ def delete_weapon(char):
         print("Not successful in deleting weapon")
         blankline()
 
+def display_all_weapons():
+    weapons = Weapon.get_all()
+    for weapon in weapons:
+        print(weapon)
+
 
 
 

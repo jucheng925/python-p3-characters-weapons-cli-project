@@ -11,7 +11,8 @@ from helpers import (
     update_character,
     display_weapons,
     add_weapon,
-    delete_weapon
+    delete_weapon,
+    display_all_weapons
 )
 
 
@@ -91,12 +92,27 @@ def weapon_menu(selected_char):
         elif choice == "2":
             delete_weapon(selected_char)
         elif choice == "3":
-            print("trade")
+            trade_menu(selected_char)
         elif choice == "4" or choice == "":
             print("Returning to previous menu")
             break
         else:
             print("Invalid Choice")
+
+def trade_menu(selected_char):
+    # while True:
+        asterisk_line()
+        display_all_weapons()
+        trade_character = input("Choose the character you want to trade with: ")
+        # print('     1. Buy a custom made weapon')
+        # blankline()
+        # print('     2. Sell weapon(s)')
+        # blankline()
+        # print('     3. Trade weapon with other characters')
+        # blankline()
+        # print('     4. Or press "Enter" to previous menu')
+        # blankline()
+
 
 
 

@@ -157,19 +157,18 @@ def trade(trade_char, selected_char):
         print("Weapon not found, please try again")
         trade(trade_char, selected_char)
 
-    trade_list = [trade_char, trade_character_weapon, selected_char, trade_weapon]
-    confirm_trade(trade_list)
+    confirm_trade(trade_char, trade_character_weapon, selected_char, trade_weapon)
 
-def confirm_trade(list):
+def confirm_trade(trade_char, trade_character_weapon, selected_char, trade_weapon):
     asterisk_line()
-    print(f"The trade will be between {list[0].name} and {list[2].name}")
-    print(f'    {list[1].upper()} will be exchange for {list[3].upper()}')
+    print(f"The trade will be between {trade_char.name} and {selected_char.name}")
+    print(f'    {trade_character_weapon.upper()} will be exchange for {trade_weapon.upper()}')
     confirm = input("Press 'y' to confirm the trade or press any other keys to cancel: ")
     if confirm == ("y" or "Y"):
-        trade_weapon_1 = Weapon.find_by_type(list[1].upper())
-        trade_weapon_1.owner_id = list[2].id 
-        trade_weapon_2 = Weapon.find_by_type(list[3].upper())
-        trade_weapon_2.owner_id = list[0].id
+        trade_weapon_1 = Weapon.find_by_type(trade_character_weapon.upper())
+        trade_weapon_1.owner_id = selected_char.id 
+        trade_weapon_2 = Weapon.find_by_type(trade_weapon.upper())
+        trade_weapon_2.owner_id = trade_char.id
         trade_weapon_1.update()
         trade_weapon_2.update()
         print("Trade completed")

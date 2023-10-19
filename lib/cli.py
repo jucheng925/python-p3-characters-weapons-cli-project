@@ -111,16 +111,6 @@ def trade_menu(selected_char):
             break
         else:
             trade_partner(selected_char, trade_name)
-        
-        # print('     1. Buy a custom made weapon')
-        # blankline()
-        # print('     2. Sell weapon(s)')
-        # blankline()
-        # print('     3. Trade weapon with other characters')
-        # blankline()
-        # print('     4. Or press "Enter" to previous menu')
-        # blankline()
-
 
 
 

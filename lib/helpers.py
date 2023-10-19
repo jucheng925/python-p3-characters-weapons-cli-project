@@ -1,6 +1,7 @@
 # lib/helpers.py
 from models.character import Character
 from models.weapon import Weapon
+from prettytable import PrettyTable
 import random
 
 
@@ -124,14 +125,55 @@ def delete_weapon(char):
         blankline()
 
 def display_all_weapons():
-    # weapons = Weapon.get_all()
-    # for weapon in weapons:
-    #     print(weapon)
-    prettytable = Weapon.display_all()
-   
-    prettytable.align = "r"
-    print(prettytable.get_string(fields=["type", "damage_value", "cost_value"]))
+    table = PrettyTable()
+    table.field_names = ["Weapon Type", "Damage Value", "Cost Value", "Owner Name"]
+    weapons = Weapon.get_all()
+    for weapon in weapons:
+        table.add_row([weapon.type, weapon.damage_value, weapon.cost_value, weapon.owner_name()])
+    table.align = "l"
+    print(table)    
 
+def trade_partner(char):
+    trade_name = input("Choose the character you want to trade with: ")
+    if trade_name.title() == char.name:
+        print("Can not trade with your selected character. Please select another character.")
+    else:
+        trade_character = Character.find_by_name(trade_name.title())
+        if trade_character:
+           trade(trade_character, char)
+
+        else:
+            print("Error finding the character, please try again")
+
+def trade(trade_char, selected_char):
+    display_weapons(trade_char)
+    trade_character_weapon = input(f'Choose one of the weapon from {trade_char.name}: ')
+    if not Weapon.find_by_type(trade_character_weapon.upper()):
+        print("Weapon not found, please try again")
+        trade(trade_char, selected_char)
+            
+    display_weapons(selected_char)
+    trade_weapon = input(f"Choose one of {selected_char.name}\'s weapon that will be exchange for {trade_character_weapon}: ")
+    if not Weapon.find_by_type(trade_weapon.upper()):
+        print("Weapon not found, please try again")
+        trade(trade_char, selected_char)
+
+    trade_list = [trade_char, trade_character_weapon, selected_char, trade_weapon]
+    confirm_trade(trade_list)
+
+def confirm_trade(list):
+    asterisk_line()
+    print(f"The trade will be between {list[0].name} and {list[2].name}")
+    print(f'    {list[1].upper()} will be exchange for {list[3].upper()}')
+    confirm = input("Please confirm to process (y/n): ")
+    if confirm == "y" or "Y":
+        trade_weapon_1 = Weapon.find_by_type(list[1].upper())
+        trade_weapon_1.owner_id = list[2].id 
+        trade_weapon_2 = Weapon.find_by_type(list[3].upper())
+        trade_weapon_2.owner_id = list[0].id
+        trade_weapon_1.update()
+        trade_weapon_2.update()
+        print("Trade completed")
 
 
 

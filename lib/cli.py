@@ -12,7 +12,8 @@ from helpers import (
     display_weapons,
     add_weapon,
     delete_weapon,
-    display_all_weapons
+    display_all_weapons,
+    trade_partner
 )
 
 
@@ -100,10 +101,10 @@ def weapon_menu(selected_char):
             print("Invalid Choice")
 
 def trade_menu(selected_char):
-    # while True:
+    while True:
         asterisk_line()
         display_all_weapons()
-        trade_character = input("Choose the character you want to trade with: ")
+        trade_partner(selected_char)
         # print('     1. Buy a custom made weapon')
         # blankline()
         # print('     2. Sell weapon(s)')

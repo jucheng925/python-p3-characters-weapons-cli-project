@@ -133,8 +133,7 @@ def display_all_weapons():
     table.align = "l"
     print(table)    
 
-def trade_partner(char):
-    trade_name = input("Choose the character you want to trade with: ")
+def trade_partner(char, trade_name):
     if trade_name.title() == char.name:
         print("Can not trade with your selected character. Please select another character.")
     else:
@@ -165,8 +164,8 @@ def confirm_trade(list):
     asterisk_line()
     print(f"The trade will be between {list[0].name} and {list[2].name}")
     print(f'    {list[1].upper()} will be exchange for {list[3].upper()}')
-    confirm = input("Please confirm to process (y/n): ")
-    if confirm == "y" or "Y":
+    confirm = input("Press 'y' to confirm the trade or press any other keys to cancel: ")
+    if confirm == ("y" or "Y"):
         trade_weapon_1 = Weapon.find_by_type(list[1].upper())
         trade_weapon_1.owner_id = list[2].id 
         trade_weapon_2 = Weapon.find_by_type(list[3].upper())
@@ -174,8 +173,9 @@ def confirm_trade(list):
         trade_weapon_1.update()
         trade_weapon_2.update()
         print("Trade completed")
-
-
+    else:
+        print("Trade did not occur.")
+        print("Returning to previous menu")
 
 def exit_program():
     print("Goodbye!")

@@ -104,7 +104,14 @@ def trade_menu(selected_char):
     while True:
         asterisk_line()
         display_all_weapons()
-        trade_partner(selected_char)
+        trade_name = input("Choose the character you want to trade with or press 'enter' to return to previous menu: ")
+        if trade_name == "":
+            print("Returning to previous menu")
+            blankline()
+            break
+        else:
+            trade_partner(selected_char, trade_name)
+        
         # print('     1. Buy a custom made weapon')
         # blankline()
         # print('     2. Sell weapon(s)')

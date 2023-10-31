@@ -58,11 +58,10 @@ def select_char_menu():
 
 
 def character_menu(selected_char):
-    blankline()
-    print(selected_char, end=", \n")
-    print(f'    Currently has {len(selected_char.weapons())} weapon(s).')
-    blankline()
     while True:
+        print(selected_char, end=", \n")
+        print(f'    Currently has {len(selected_char.weapons())} weapon(s).')
+        blankline()
         asterisk_line()
         print("Choose an option: ")
         print(f'     1. Update {selected_char.name}')

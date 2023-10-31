@@ -11,10 +11,6 @@ def blankline():
 def asterisk_line():
     print("****************************")
 
-def job_class_table():
-    table = PrettyTable()
-    job_list = Character.JOBCLASS
-    table.add_row([job_list[0], job_list[1]])
 
 def display_all_characters():
     char_table = PrettyTable()
@@ -42,13 +38,12 @@ def add_character():
     except Exception as exc:
         print("Error creating character: ", exc)
 
-def delete_character(character):
+def delete_character(delete_char):
     try:
-        delete_char = Character.find_by_id(character.id)
         weapons = delete_char.weapons()
         [weapon.delete() for weapon in weapons]
         delete_char.delete()
-        print(f'{character} is deleted.')
+        print(f'{delete_char} is deleted.')
     except Exception:
         print("Not successful in deleting character")
 
@@ -56,13 +51,12 @@ def update_character(character):
     try:
         name = input(f'Enter a new name for {character.name} or press "Enter" to keep it the same: ')
         if name != "": character.name = name
-        print(Character.JOBCLASS)
+        print(f'Selectable job class: {Character.JOBCLASS}')
         job_class = input('Enter the character\'s new job class or press "Enter" to keep it the same: ')
-        if job_class != "": character.job_class = job_class
-        message = input('Can not change money amount, press "Enter" to acknowledge: ')
-        print(message)
-
+        if job_class != "": character.job_class = job_class.title()
+        input('Can not change money amount, press "Enter" to acknowledge: ')
         character.update()
+        blankline()
         print(f'Success in updating: {character}')
         blankline()
     except Exception as exc:
@@ -71,47 +65,45 @@ def update_character(character):
 def display_weapons(char):
     weapons = char.weapons()
     if weapons:
+        print(f'{char.name} has ${char.money}.')
         print(f"The weapon(s) that belongs to {char.name}: ")
+        table = PrettyTable()
+        table.field_names = ["Weapon Type", "Damage Value", "Cost Value"]
         for weapon in weapons:
-            blankline()
-            print(f'    -- {weapon}')
-        blankline()
+            table.add_row([weapon.type, weapon.damage_value, weapon.cost_value])
+        print(table)
     else:
-        print(f'{char.name} does not have any weapons.')
+        print(f'{char.name} has ${char.money} and does not have any weapons.')
 
 def add_weapon(char):
     blankline()
     weapon_type = input("Enter the type of weapon: ")
     damage_value = int(input("Enter the weapon's damage value (from 0 to 10): "))
-    message = input('The price of the weapon will be randomly generate. Press "Enter" to acknowledge: ')
+    input('The price of the weapon will be randomly generate. Press "Enter" to acknowledge: ')
     blankline()
-    if message == "": 
-        try:
-            cost_value = random.randrange(10,51)
-            weapon = Weapon.create(weapon_type, damage_value, cost_value, char.id)
-            print(f'Success in creating: {weapon}')
-            char.spend(cost_value)
-            print(f'**Money spent: ${cost_value}')
-            blankline()
-        except Exception as exc:
-            print("Error creating weapon: ", exc)
-            print("Not successful in buying weapon, please try again!")
-            blankline()
-    else: 
+    try:
+        cost_value = random.randrange(10,51)
+        weapon = Weapon.create(weapon_type, damage_value, cost_value, char.id)
+        print(f'Success in creating: {weapon}')
+        char.adjust_money(-cost_value)
+        print(f'**Money spent: ${cost_value}')
+        blankline()
+    except Exception as exc:
+        print("Error creating weapon: ", exc)
         print("Not successful in buying weapon, please try again!")
         blankline()
 
 def delete_weapon(char):
-    weapon_type = input("Enter the weapon type to sell: ")
+    weapon_type = input("Type the weapon type that you want to sell: ")
     try:
         weapon_to_delete = Weapon.find_by_type(weapon_type.upper())
         price = weapon_to_delete.cost_value
-        char.sell(price)
+        char.adjust_money(price)
         weapon_to_delete.delete()
         print(f'{weapon_type} was sold for ${price}')
         blankline()
     except Exception:
-        print("Not successful in deleting weapon")
+        print("Not successful in deleting weapon. Please try again.")
         blankline()
 
 def display_all_weapons():

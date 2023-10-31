@@ -1,11 +1,8 @@
 from models.__init__ import CURSOR, CONN
 
 class Character:
-    ##Job class - will need to build out a list of available job class.
-    ##Show it to the end user
-    ##fixed the property - to show error when it is not one of the available class
-
     all = {}
+    JOBCLASS = ["Barbarian", "Mage", "Knight", "Ranger", "Rouge", "Cleric"]
 
     def __init__(self, name, job_class, money, id = None):
         self.id = id
@@ -14,7 +11,7 @@ class Character:
         self.money = money
 
     def __repr__(self):
-        return f"Character: {self.name}, Job class: {self.job_class.title()}, Money: ${self.money}"
+        return f"Character: {self.name}, Job class: {self.job_class}, Money: ${self.money}"
     
     @property
     def name(self):
@@ -33,10 +30,10 @@ class Character:
     
     @job_class.setter
     def job_class(self, job_class):
-        if isinstance(job_class, str) and len(job_class):
-            self._job_class = job_class.lower()
+        if job_class in Character.JOBCLASS:
+            self._job_class = job_class
         else:
-            raise ValueError("Job class must be a non-empty string")
+            raise ValueError("Job class must be one of the listed job class.")
         
     @property
     def money(self):

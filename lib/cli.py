@@ -6,6 +6,7 @@ from helpers import (
     blankline,
     asterisk_line,
     display_all_characters,
+    validate_selection,
     add_character,
     delete_character,
     update_character,
@@ -22,7 +23,7 @@ def main():
         menu()
         choice = input("> ")
         if choice == "1":
-            display_all_characters()
+            select_char_menu()
         elif choice == "2":
             add_character()
         elif choice == "3":
@@ -35,25 +36,38 @@ def menu():
     blankline()
     print(" **Welcome to Game World**")
     asterisk_line() 
-    print("  Please choose a character:")
+    print("  Character Menu: please choose a character:")
+    blankline()
     print("     1. Display all available characters")
     blankline()
     print("     2. Add a new character")
     blankline()
     print("     3. Exit program")
 
+def select_char_menu():
+    while True:
+        display_all_characters()
+        blankline()
+        print("Type the name of the character for more details or press 'Enter' to return to the previous menu.")
+        choice = input("> ")
+        if choice == "":
+            print("Returning to previous menu")
+            break
+        else:
+            validate_selection(choice)
 
 
 def character_menu(selected_char):
     blankline()
     print(selected_char, end=", \n")
     print(f'    Currently has {len(selected_char.weapons())} weapon(s).')
+    blankline()
     while True:
         asterisk_line()
         print("Choose an option: ")
         print(f'     1. Update {selected_char.name}')
         blankline()
-        print(f'     2. Delete {selected_char.name} (including all current weapons)')
+        print(f'     2. Delete {selected_char.name} (and associated weapons)')
         blankline()
         print(f'     3. Display {selected_char.name}\'s weapon(s)')
         blankline()

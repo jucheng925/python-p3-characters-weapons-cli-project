@@ -5,39 +5,29 @@ from prettytable import PrettyTable
 import random
 
 
-
 def blankline():
     print("")
 
 def asterisk_line():
     print("****************************")
 
+def job_class_table():
+    table = PrettyTable()
+    job_list = Character.JOBCLASS
+    table.add_row([job_list[0], job_list[1]])
+
 def display_all_characters():
+    char_table = PrettyTable()
+    char_table.field_names = ["Name", "Job Class", "Money"]
     characters = Character.get_all()
-    while True:
-        asterisk_line()
-        print("Enter a selection for more details: ")
-        x = 1
-        for character in characters:
-            character.position = x
-            print(f'    {character.position}', end= ". ")
-            print(character)
-            blankline()
-            x +=1
-        print(f'    {x}. Or press "Enter" to return to previous menu.')
-        try: 
-            choice = input("> ")
-            if choice == "" or choice == str(x):
-                print("Returning to previous menu")
-                break
-            elif int(choice) in range(1, x):
-                char = [character for character in characters if character.position == int(choice)]
-                from cli import character_menu
-                character_menu(char[0])
-            else:
-                print("Invalid number - need to be one of the listed number.")
-        except ValueError:
-            print("Invalid selection - selection must be a number")
+    for character in characters:
+        char_table.add_row([character.name, character.job_class, character.money], divider = True)
+    print(char_table)
+
+def validate_selection(choice):
+    selected_character = Character.find_by_name(choice.title())
+    from cli import character_menu
+    character_menu(selected_character) if selected_character else print(f'Character {choice} not found.')
 
 
 def add_character():
@@ -63,17 +53,17 @@ def delete_character(character):
         print("Not successful in deleting character")
 
 def update_character(character):
-    update_char = Character.find_by_id(character.id)
     try:
-        name = input(f'Enter a new name for {character.name} or press "Enter": ')
-        if name != "": update_char.name = name
-        job_class = input('Enter the character\'s new job class: ')
-        if job_class != "": update_char.job_class = job_class
+        name = input(f'Enter a new name for {character.name} or press "Enter" to keep it the same: ')
+        if name != "": character.name = name
+        print(Character.JOBCLASS)
+        job_class = input('Enter the character\'s new job class or press "Enter" to keep it the same: ')
+        if job_class != "": character.job_class = job_class
         message = input('Can not change money amount, press "Enter" to acknowledge: ')
         print(message)
 
-        update_char.update()
-        print(f'Success in updating: {update_char}')
+        character.update()
+        print(f'Success in updating: {character}')
         blankline()
     except Exception as exc:
         print("Error in updating character: ", exc)

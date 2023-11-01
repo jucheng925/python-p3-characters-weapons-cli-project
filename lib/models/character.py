@@ -31,7 +31,7 @@ class Character:
     @job_class.setter
     def job_class(self, job_class):
         if job_class in Character.JOBCLASS:
-            self._job_class = job_class
+            self._job_class = job_class.title()
         else:
             raise ValueError("Job class must be one of the listed job class.")
         

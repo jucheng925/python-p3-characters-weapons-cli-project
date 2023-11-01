@@ -28,12 +28,12 @@ def validate_selection(choice):
 
 def add_character():
     name = input("Enter the character's name: ")
+    print(f'Selectable job class: {Character.JOBCLASS}')
     job_class = input("Enter the character's job class: ")
     money = input('Enter a starting money amount or press "Enter" for the default amount: ')
-    name = name.lower()
     try:
         if money == "": money = "100"
-        character = Character.create(name, job_class, int(money))
+        character = Character.create(name, job_class.title(), int(money))
         print(f'Success in creating: {character}')
     except Exception as exc:
         print("Error creating character: ", exc)

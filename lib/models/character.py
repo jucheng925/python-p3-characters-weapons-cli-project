@@ -166,6 +166,7 @@ class Character:
     def adjust_money(self, amount):
         self.money += amount
         self.update()
+ 
 
 
     

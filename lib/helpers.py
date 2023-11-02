@@ -95,21 +95,22 @@ def add_weapon(char):
     console.print("Enter the [bold]WEAPON TYPE[/]", end="")
     weapon_type = input(": ")
     console.print("Enter the weapon's damage value ([hot_pink3]from 0 to 10[/])", end="")
-    damage_value = int(input(": "))
+    damage_value = input(": ")
     console.print('The price of the weapon will be randomly generate. Press "Enter" to acknowledge', style="bold dark_red", end="")
     input(': ')
     blankline()
     try:
         cost_value = random.randrange(10,51)
-        weapon = Weapon.create(weapon_type, damage_value, cost_value, char.id)
-        console.print(f'[success]Success in creating: {weapon}[/]')
-        char.adjust_money(-cost_value)
-        console.print(f'**Money spent: [money]${cost_value}[/].**', style="success")
-        blankline()
+        if char.money > cost_value:
+            char.adjust_money(-cost_value)
+            weapon = Weapon.create(weapon_type, int(damage_value), cost_value, char.id)
+            console.print(f'**Money spent: [money]${cost_value}[/].**', style="success")
+            console.print(f'[success]Success in creating: {weapon}[/]')
+        else:
+            console.print("Do not have enough money to buy!", style="error")
     except Exception as exc:
-        console.print("Error creating weapon: ", exc, style ="error")
-        console.print("Not successful in buying weapon, please try again!", style ="error")
-        blankline()
+        console.print("Not successful in buying weapon, please try again!", exc, style ="error")
+
 
 def delete_weapon(char):
     console.print("Enter the [bold]WEAPON TYPE[/] that you want to sell")

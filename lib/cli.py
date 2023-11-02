@@ -59,6 +59,7 @@ def select_char_menu():
 
 def character_menu(selected_char):
     while True:
+        blankline()
         print(selected_char, end=", \n")
         print(f'    Currently has {len(selected_char.weapons())} weapon(s).')
         blankline()

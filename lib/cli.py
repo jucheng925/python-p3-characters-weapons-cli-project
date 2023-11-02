@@ -52,7 +52,7 @@ def select_char_menu():
         choice = input("> ")
         if choice == "":
             print("Returning to previous menu")
-            break
+            main()
         else:
             validate_selection(choice)
 
@@ -82,7 +82,7 @@ def character_menu(selected_char):
             weapon_menu(selected_char)
         elif choice == "4" or choice == "":
             print("Returning to previous menu")
-            break
+            select_char_menu()
         else:
             print("Invalid Choice")
 
@@ -97,7 +97,7 @@ def weapon_menu(selected_char):
         blankline()
         print('     3. Trade weapon with other characters')
         blankline()
-        print('     4. Or press "Enter" to previous menu')
+        print('     4. Or press "Enter" for previous menu')
         blankline()
 
         choice = input("> ")
@@ -109,21 +109,26 @@ def weapon_menu(selected_char):
             trade_menu(selected_char)
         elif choice == "4" or choice == "":
             print("Returning to previous menu")
-            break
+            character_menu(selected_char)
         else:
             print("Invalid Choice")
 
 def trade_menu(selected_char):
     while True:
-        asterisk_line()
-        display_all_weapons()
-        trade_name = input("Choose the character you want to trade with or press 'enter' to return to previous menu: ")
-        if trade_name == "":
-            print("Returning to previous menu")
+        if not selected_char.weapons():
+            print(f'{selected_char.name} has no weapons and can not trade. Buy a weapon instead.')
             blankline()
             break
         else:
-            trade_partner(selected_char, trade_name)
+            asterisk_line()
+            display_all_weapons()
+            trade_part = input("Choose the character you want to trade with or press 'enter' to return to previous menu: ")
+            if trade_part == "":
+                print("Returning to previous menu")
+                blankline()
+                weapon_menu(selected_char)
+            else:
+                trade_partner(selected_char, trade_part)
 
 
 

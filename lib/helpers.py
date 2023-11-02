@@ -94,7 +94,7 @@ def add_weapon(char):
         blankline()
 
 def delete_weapon(char):
-    weapon_type = input("Type the weapon type that you want to sell: ")
+    weapon_type = input("Enter the weapon type that you want to sell: ")
     try:
         weapon_to_delete = Weapon.find_by_type(weapon_type.upper())
         price = weapon_to_delete.cost_value
@@ -103,7 +103,7 @@ def delete_weapon(char):
         print(f'{weapon_type} was sold for ${price}')
         blankline()
     except Exception:
-        print("Not successful in deleting weapon. Please try again.")
+        print("Not successful in selling weapon. Please try again.")
         blankline()
 
 def display_all_weapons():
@@ -115,48 +115,51 @@ def display_all_weapons():
     table.align = "l"
     print(table)    
 
-def trade_partner(char, trade_name):
-    if trade_name.title() == char.name:
-        print("Can not trade with your selected character. Please select another character.")
+def trade_partner(char, trade_part):
+    if trade_part.title() == char.name:
+        print("Can not trade with your character. Please select another character.") 
     else:
-        trade_character = Character.find_by_name(trade_name.title())
+        trade_character = Character.find_by_name(trade_part.title())
         if trade_character:
-           trade(trade_character, char)
-
+           trade(char, trade_character)
         else:
             print("Error finding the character, please try again")
 
-def trade(trade_char, selected_char):
-    display_weapons(trade_char)
-    trade_character_weapon = input(f'Choose one of the weapon from {trade_char.name}: ')
-    if not Weapon.find_by_type(trade_character_weapon.upper()):
-        print("Weapon not found, please try again")
-        trade(trade_char, selected_char)
-            
-    display_weapons(selected_char)
-    trade_weapon = input(f"Choose one of {selected_char.name}\'s weapon that will be exchange for {trade_character_weapon}: ")
-    if not Weapon.find_by_type(trade_weapon.upper()):
-        print("Weapon not found, please try again")
-        trade(trade_char, selected_char)
+def trade(my_char, trade_char):
+    while True:
+        trade_char_weapon = choose_weapon(trade_char)
+        my_weapon = choose_weapon(my_char)
+        if trade_char_weapon and my_weapon:
+            confirm_trade(trade_char, trade_char_weapon, my_char, my_weapon)
+        else:
+            print("Trade not successful. Please try again.")
 
-    confirm_trade(trade_char, trade_character_weapon, selected_char, trade_weapon)
+def choose_weapon(char):
+    display_weapons(char)
+    trade_weapon = input(f"Choose one of {char.name}\'s weapon that will be trade: ")
+    trade_weapon = Weapon.find_by_type(trade_weapon.upper())
+    return trade_weapon if trade_weapon else print("Weapon not found, please check spelling.")
 
-def confirm_trade(trade_char, trade_character_weapon, selected_char, trade_weapon):
+
+def confirm_trade(trade_char, trade_character_weapon, my_char, my_weapon):
     asterisk_line()
-    print(f"The trade will be between {trade_char.name} and {selected_char.name}")
-    print(f'    {trade_character_weapon.upper()} will be exchange for {trade_weapon.upper()}')
-    confirm = input("Press 'y' to confirm the trade or press any other keys to cancel: ")
+    print(f"The trade will be between {trade_char.name} and {my_char.name}")
+    print(f'    {trade_character_weapon.type} will be exchange for {my_weapon.type}')
+    confirm = input("Press 'Y' or 'y' to confirm the trade or press any other keys to cancel: ")
     if confirm == ("y" or "Y"):
-        trade_weapon_1 = Weapon.find_by_type(trade_character_weapon.upper())
-        trade_weapon_1.owner_id = selected_char.id 
-        trade_weapon_2 = Weapon.find_by_type(trade_weapon.upper())
-        trade_weapon_2.owner_id = trade_char.id
-        trade_weapon_1.update()
-        trade_weapon_2.update()
+        my_weapon.owner_id = trade_char.id
+        trade_character_weapon.owner_id = my_char.id
+        my_weapon.update()
+        trade_character_weapon.update()
         print("Trade completed")
+        from cli import character_menu
+        character_menu(my_char)
     else:
         print("Trade did not occur.")
         print("Returning to previous menu")
+        from cli import trade_menu
+        trade_menu(my_char)
+
 
 def exit_program():
     print("Goodbye!")

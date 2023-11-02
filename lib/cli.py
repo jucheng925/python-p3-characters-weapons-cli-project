@@ -14,7 +14,8 @@ from helpers import (
     add_weapon,
     delete_weapon,
     display_all_weapons,
-    trade_partner
+    trade_partner,
+    console
 )
 
 
@@ -29,29 +30,30 @@ def main():
         elif choice == "3":
             exit_program()
         else:
-            print("Invalid choice")
+            console.print("Invalid Choice", style="error")
 
 
 def menu():
     blankline()
-    print(" **Welcome to Game World**")
+    console.print(" ***Welcome to Game World***", style="underline bold chartreuse3")
+    blankline()
     asterisk_line() 
-    print("  Character Menu: please choose a character:")
+    console.print("  [bold]Character Menu:[/] please choose a character:")
     blankline()
-    print("     1. Display all available characters")
+    console.print("     [italic]1. Display all available characters[/]")
     blankline()
-    print("     2. Add a new character")
+    console.print("     [italic]2. Add a new character[/]")
     blankline()
-    print("     3. Exit program")
+    console.print("     [italic]3. Exit program[/]")
 
 def select_char_menu():
     while True:
         display_all_characters()
         blankline()
-        print("Type the name of the character for more details or press 'Enter' to return to the previous menu.")
-        choice = input("> ")
+        console.print("Type the name of the character for more details or press 'Enter' to return to the previous menu.", style="bold")
+        choice = input(" > ")
         if choice == "":
-            print("Returning to previous menu")
+            console.print("Returning to previous menu", style="error")
             main()
         else:
             validate_selection(choice)
@@ -60,18 +62,18 @@ def select_char_menu():
 def character_menu(selected_char):
     while True:
         blankline()
-        print(selected_char, end=", \n")
-        print(f'    Currently has {len(selected_char.weapons())} weapon(s).')
+        console.print(f' [success] {selected_char}[/]')
+        console.print(f'    [success]Currently has {len(selected_char.weapons())} weapon(s).[/]')
         blankline()
         asterisk_line()
-        print("Choose an option: ")
-        print(f'     1. Update {selected_char.name}')
+        console.print("Choose an option: ", style="bold")
+        console.print(f'     [italic]1. Update [name]{selected_char.name}[/][/]')
         blankline()
-        print(f'     2. Delete {selected_char.name} (and associated weapons)')
+        console.print(f'     [italic]2. Delete [name]{selected_char.name}[/] (and associated weapons)[/]')
         blankline()
-        print(f'     3. Display {selected_char.name}\'s weapon(s)')
+        console.print(f'     3. Display [name]{selected_char.name}\'s[/] weapons', style = "italic")
         blankline()
-        print('     4. Or Press "Enter" to return to previous menu')
+        console.print('     [italic]4. Or Press "Enter" to return to previous menu[/]')
 
         choice = input("> ")
         if choice == "1":
@@ -82,23 +84,23 @@ def character_menu(selected_char):
         elif choice == "3":
             weapon_menu(selected_char)
         elif choice == "4" or choice == "":
-            print("Returning to previous menu")
+            console.print("Returning to previous menu", style="error")
             select_char_menu()
         else:
-            print("Invalid Choice")
+            console.print("Invalid Choice", style="error")
 
 def weapon_menu(selected_char):
     while True:
         display_weapons(selected_char)
         asterisk_line()
-        print("Choose an option: ")
-        print('     1. Buy a custom made weapon')
+        console.print("Choose an option: ", style="bold")
+        console.print('     [italic]1. Buy a custom made weapon[/]')
         blankline()
-        print('     2. Sell weapon(s)')
+        console.print('     [italic]2. Sell weapon[/]')
         blankline()
-        print('     3. Trade weapon with other characters')
+        console.print('     [italic]3. Trade weapon with other characters[/]')
         blankline()
-        print('     4. Or press "Enter" for previous menu')
+        console.print('     [italic]4. Or press "Enter" for previous menu[/]')
         blankline()
 
         choice = input("> ")
@@ -109,23 +111,24 @@ def weapon_menu(selected_char):
         elif choice == "3":
             trade_menu(selected_char)
         elif choice == "4" or choice == "":
-            print("Returning to previous menu")
+            console.print("Returning to previous menu", style="error")
             character_menu(selected_char)
         else:
-            print("Invalid Choice")
+            console.print("Invalid Choice", style="error")
 
 def trade_menu(selected_char):
     while True:
         if not selected_char.weapons():
-            print(f'{selected_char.name} has no weapons and can not trade. Buy a weapon instead.')
+            console.print(f'[name]{selected_char.name}[/] [error]has no weapons and can not trade. Buy a weapon instead.[/]')
             blankline()
             break
         else:
             asterisk_line()
             display_all_weapons()
-            trade_part = input("Choose the character you want to trade with or press 'enter' to return to previous menu: ")
+            console.print('Choose the character you want to trade with or press "Enter" to return to previous menu', style="bold")
+            trade_part = input("        > ")
             if trade_part == "":
-                print("Returning to previous menu")
+                console.print("Returning to previous menu", style="error")
                 blankline()
                 weapon_menu(selected_char)
             else:

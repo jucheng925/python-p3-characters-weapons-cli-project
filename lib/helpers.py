@@ -33,14 +33,17 @@ def display_all_characters():
 def validate_selection(choice):
     selected_character = Character.find_by_name(choice.title())
     from cli import character_menu
-    character_menu(selected_character) if selected_character else console.print(f'Character [name]{choice}[/] not found.', style ="error")
+    character_menu(selected_character) if selected_character else console.print(f'Character [name]{choice.title()}[/] not found.', style ="error")
 
 
 def add_character():
-    name = input("Enter the character's name: ")
+    console.print("Enter the character's name", style="bold", end="")
+    name = input(": ")
     display_job_classes()
-    job_class = input("Enter the character's job class: ")
-    money = input('Enter a starting money amount or press "Enter" for the default amount: ')
+    console.print("Enter the character's job class", style="bold", end="")
+    job_class = input(": ")
+    console.print('Enter a starting money amount or press "Enter" for the default amount:', style ="bold", end="")
+    money = input(": ")
     try:
         if money == "": money = "100"
         character = Character.create(name, job_class.title(), int(money))
@@ -52,18 +55,20 @@ def delete_character(delete_char):
     weapons = delete_char.weapons()
     if weapons: [weapon.delete() for weapon in weapons]
     delete_char.delete()
-    console.print(f'[name]{delete_char}[/] is deleted.', style ="success")
+    console.print(f'{delete_char} is deleted.', style ="success")
 
 
-def update_character(character):
+def update_character(character):                
     try:
-        console.print(f'Enter a new name for [name]{character.name}[/] or press "Enter" to keep it the same: ')
-        name = input("      >")
+        console.print(f'Enter a new name for [name]{character.name}[/] or press "Enter" to keep it the same', style="bold", end="")
+        name = input(": ")
         if name != "": character.name = name
         display_job_classes()
-        job_class = input('Enter the character\'s new job class or press "Enter" to keep it the same: ')
+        console.print('Enter the character\'s new job class or press "Enter" to keep it the same', style="bold", end="")
+        job_class = input(": ")
         if job_class != "": character.job_class = job_class.title()
-        input('Can not change money amount, press "Enter" to acknowledge: ')
+        console.print('Can not change money amount, press "Enter" to acknowledge', style ="bold dark_red", end="")
+        input(": ")
         character.update()
         blankline()
         console.print(f'[success]Success in updating: {character}[/]')
@@ -75,21 +80,24 @@ def display_weapons(char):
     weapons = char.weapons()
     if weapons:
         console.print(f'[name]{char.name}[/] has [money]${char.money}[/].')
-        table = Table(title=f"{char.name}'s Weapon(s)", show_lines="true")
-        table.add_column("Weapon Type", style="bold")
-        table.add_column("Damage Value", style="hot_pink3")
-        table.add_column("Cost Value", style="money")
+        table = Table(title=f"{char.name}'s Weapon(s)", show_lines="true", width=42)
+        table.add_column("Weapon Type", style="bold", ratio=4)
+        table.add_column("Damage Value", style="hot_pink3", ratio=2)
+        table.add_column("Cost Value", style="money",ratio=2)
         for weapon in weapons:
             table.add_row(weapon.type, str(weapon.damage_value), f'${weapon.cost_value}')
         console.print(table)
     else:
-        console.print(f'[name]{char.name}[/] has [money]${char.money}[/] and does not have any weapons.', style="error")
+        console.print(f'[name]{char.name}[/] has [money]${char.money}[/] and does not have any weapons.', style="bold dark_red")
 
 def add_weapon(char):
     blankline()
-    weapon_type = input("Enter the type of weapon: ")
-    damage_value = int(input("Enter the weapon's damage value (from 0 to 10): "))
-    input('The price of the weapon will be randomly generate. Press "Enter" to acknowledge: ')
+    console.print("Enter the [bold]WEAPON TYPE[/]", end="")
+    weapon_type = input(": ")
+    console.print("Enter the weapon's damage value ([hot_pink3]from 0 to 10[/])", end="")
+    damage_value = int(input(": "))
+    console.print('The price of the weapon will be randomly generate. Press "Enter" to acknowledge', style="bold dark_red", end="")
+    input(': ')
     blankline()
     try:
         cost_value = random.randrange(10,51)
@@ -104,21 +112,22 @@ def add_weapon(char):
         blankline()
 
 def delete_weapon(char):
-    weapon_type = input("Enter the weapon type that you want to sell: ")
+    console.print("Enter the [bold]WEAPON TYPE[/] that you want to sell")
+    weapon_type = input(": ")
     try:
         weapon_to_delete = Weapon.find_by_type(weapon_type.upper())
         price = weapon_to_delete.cost_value
         char.adjust_money(price)
         weapon_to_delete.delete()
-        console.print(f'{weapon_to_delete.type} was sold for [money]${price}[/].', style ="success")
+        console.print(f'{weapon_type.upper()} was sold for [money]${price}[/].', style ="success")
         blankline()
     except Exception:
         console.print("Not successful in selling weapon. Please try again.", style ="error")
         blankline()
 
 def display_all_weapons():
-    table = Table(title="All Available Weapons", show_lines="true")
-    table.add_column("Weapon Type", ratio=2, style ="bold")
+    table = Table(title="ALL AVAILABLE WEAPONS", show_lines="true", width=55)
+    table.add_column("Weapon Type", ratio=3, style ="bold")
     table.add_column("Damage Value", ratio=2, style="hot_pink3")
     table.add_column("Cost Value", ratio=2, style="money")
     table.add_column("Owner Name", ratio=2, style ="name")
@@ -148,21 +157,28 @@ def trade(my_char, trade_char):
 
 def choose_weapon(char):
     display_weapons(char)
-    trade_weapon = input(f"Choose one of {char.name}\'s weapon that will be trade: ")
+    console.print(f"From [name]{char.name}\'s[/] weapons, enter the [bold]WEAPON TYPE[/] that will be trade")
+    trade_weapon = input(f"     > ")
     trade_weapon = Weapon.find_by_type(trade_weapon.upper())
     return trade_weapon if trade_weapon else console.print("Weapon not found, please check spelling.", style ="error")
 
+def trade_table(trade_char, trade_character_weapon, my_char, my_weapon):
+    table = Table("Your Character", "Trade Character", title="TRADE CONFIRMATION")
+    table.add_row(f'[name]{my_char.name}[/]', f'[name]{trade_char.name}[/]')
+    table.add_row(f'[bold]{my_weapon.type}[/]', f'[bold]{trade_character_weapon.type}[/]')
+    console.print(table)
 
-def confirm_trade(trade_char, trade_character_weapon, my_char, my_weapon):
+def confirm_trade(trade_char, trade_char_weapon, my_char, my_weapon):
     asterisk_line()
-    print(f"The trade will be between {trade_char.name} and {my_char.name}")
-    print(f'    {trade_character_weapon.type} will be exchange for {my_weapon.type}')
-    confirm = input("Press 'Y' or 'y' to confirm the trade or press any other keys to cancel: ")
+    trade_table(trade_char, trade_char_weapon, my_char, my_weapon)
+    console.print(f"[name]{my_char.name}'s[/] [bold]{my_weapon.type}[/] will be exchange for [name]{trade_char.name}'s[/] [bold]{trade_char_weapon.type}[/]")
+    console.print('Press "Y" or "y" to confirm the trade or press any other keys to cancel', end="", style="bold underline dark_red")
+    confirm = input(': ')
     if confirm == ("y" or "Y"):
         my_weapon.owner_id = trade_char.id
-        trade_character_weapon.owner_id = my_char.id
+        trade_char_weapon.owner_id = my_char.id
         my_weapon.update()
-        trade_character_weapon.update()
+        trade_char_weapon.update()
         console.print("Trade completed", style ="success")
         from cli import character_menu
         character_menu(my_char)
@@ -174,5 +190,5 @@ def confirm_trade(trade_char, trade_character_weapon, my_char, my_weapon):
 
 
 def exit_program():
-    console.print("Goodbye!", style="bold")
+    console.print("Goodbye!", style="bold orange3")
     exit()

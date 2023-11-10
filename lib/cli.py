@@ -125,7 +125,7 @@ def trade_menu(selected_char):
         else:
             asterisk_line()
             display_all_weapons()
-            console.print('Choose the character you want to trade with or press "Enter" to return to previous menu', style="bold")
+            console.print(f'Choose the character to trade with {selected_char.name} or press "Enter" to return to previous menu', style="bold")
             trade_part = input("        > ")
             if trade_part == "":
                 console.print("Returning to previous menu", style="error")

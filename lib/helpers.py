@@ -5,6 +5,7 @@ from rich.console import Console
 from rich.theme import Theme
 from rich.table import Table
 import random
+import copy
 
 custom_theme = Theme({"success":"bold green" , "error": "bold red", "name": "bold cyan", "money": "italic turquoise4", "jobclass":"bold magenta"})
 console = Console(theme = custom_theme)
@@ -58,7 +59,8 @@ def delete_character(delete_char):
     console.print(f'{delete_char} is deleted.', style ="success")
 
 
-def update_character(character):                
+def update_character(character):
+    original_char = copy.deepcopy(character)            
     try:
         console.print(f'Enter a new name for [name]{character.name}[/] or press "Enter" to keep it the same', style="bold", end="")
         name = input(": ")
@@ -75,6 +77,9 @@ def update_character(character):
         blankline()
     except Exception as exc:
         console.print("Error in updating character: ", exc, style ="error")
+        character.name = original_char.name
+        
+
 
 def display_weapons(char):
     weapons = char.weapons()

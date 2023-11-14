@@ -2,7 +2,7 @@
 *A menu-based project for game characters and their weapons*
 
 ## Description 
-This is a CLI **(Command Line Interface)** and ORM **(Object Relational Mapping)**project that is written in Python. Each instance create/update will be save in a SQL lite database in the background through Python ORM methods. This project will have 2 model classes (Character and Weapon) with a one-to-many relationships between them. 
+This is a CLI **(Command Line Interface)** and ORM **(Object Relational Mapping)**project that is written in Python. Each instance created/updated will be save in a SQLlite database in the background through Python ORM methods. This project will have 2 model classes (Character and Weapon) with a one-to-many relationships between them. 
 
 ---
 ### To get started:
@@ -85,5 +85,7 @@ All weapons will be displayed with their corresponding owners.
 The first input needed from the user would be the trade partner/character they want to trade with. The next input would be the weapon that they are intersted in getting. Then they will have to select the weapon from their inventory to trade with. Once both weapons are selected, there will be a confirmation message to confirm the trade.
 
 ## Format
-This project use the Rich for formating, as seem by the color fonts and table display.
+This project use the Rich for formating, as seem by the color fonts and table display. [Rich docs](https://rich.readthedocs.io/en/stable/index.html)
 
+## Conclusion
+Even though this project produces a simple CLI application, a lot of background functions happen in the background. This has been a good experience for me especially with managing all these moving parts. I hope you enjoy what I have created.

@@ -1,3 +1,4 @@
+# lib/seed.py
 from models.__init__ import CONN, CURSOR
 from models.character import Character
 from models.weapon import Weapon

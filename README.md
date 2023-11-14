@@ -5,10 +5,12 @@
 This is a CLI **(Command Line Interface)** and ORM **(Object Relational Mapping)**project that is written in Python. Each instance create/update will be save in a SQL lite database in the background through Python ORM methods. This project will have 2 model classes (Character and Weapon) with a one-to-many relationships between them. 
 
 ---------
-## To get started:
+### To get started:
 First, run the below code to install the dependencies and set up the virtual environment:
-`pipenv install`
-`pipenv shell`
+```
+pipenv install
+pipenv shell
+```
 
 Next, we need to create and set up the table for the SQL database. If you want to start with an empty table run:
 `python lib/reset.py` 
@@ -20,8 +22,22 @@ However, instead if you prefer to have some data already created and pre-populat
 Once both the environment and the database is set up, run the following code to start the program.
 `python lib/cli.py`
 
-### What Goes into a README?
+### File Structure
+```
+lib
+|-- cli.py
+|-- debug.py
+|-- helpers.py
+|-- reset.py
+|-- seed.py
+|__ models
+    |-- __init__.py
+    |-- character.py
+    |-- weapon.py
 
+```
+
+###
 This README serves as a template. Replace the contents of this file to describe
 the important files in your project and describe what they do. Each Python file
 that you edit should get at least a paragraph, and each function should be

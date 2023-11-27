@@ -43,7 +43,7 @@ def add_character():
     display_job_classes()
     console.print("Enter the character's job class", style="bold", end="")
     job_class = input(": ")
-    console.print('Enter a starting money amount or press "Enter" for the default amount:', style ="bold", end="")
+    console.print('Enter a starting money amount or press "Enter" for the default amount', style ="bold", end="")
     money = input(": ")
     try:
         if money == "": money = "100"

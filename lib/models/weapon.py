@@ -13,11 +13,7 @@ class Weapon:
         self.owner_id = owner_id
 
     def __repr__(self):
-        return f'Weapon("{self.type}", "{self.damage_value}","{self.cost_value}", "{self.owner_id}")'
-
-    def __str__(self):
         return f"Weapon: {self.type}, Damage value: {self.damage_value}, Cost value: ${self.cost_value}"
-
     
     @property
     def type(self):

@@ -11,9 +11,6 @@ class Character:
         self.money = money
 
     def __repr__(self):
-        return f'Character("{self.name}","{self.job_class}","{self.money}")'
-
-    def __str__(self):
         return f"Character's name is {self.name}, is a {self.job_class} with ${self.money}"
     
     @property

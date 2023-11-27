@@ -118,7 +118,7 @@ def add_weapon(char):
 
 
 def delete_weapon(char):
-    console.print("Enter the [bold]WEAPON TYPE[/] that you want to sell")
+    console.print("Enter the [bold]WEAPON TYPE[/] that you want to sell", end="")
     weapon_type = input(": ")
     try:
         weapon_to_delete = Weapon.find_by_type(weapon_type.upper())
